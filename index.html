@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Attendance Monitoring System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-header">
+      <div>
+        <h1>Attendance Monitor</h1>
+        <p class="subtitle">Student Daily &amp; Cumulative Tracker</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="themeBtn" class="btn btn-secondary">Theme</button>
+        <button type="button" id="openModalBtn" class="btn btn-primary">+ Add Student</button>
+      </div>
+    </header>
+
+    <nav class="tab-bar" aria-label="Views">
+      <button type="button" id="tabDailyBtn" class="tab-btn active">Daily Attendance</button>
+      <button type="button" id="tabHistoryBtn" class="tab-btn">History &amp; Summary</button>
+    </nav>
+
+    <section class="filter-panel">
+      <div class="field" id="dateField">
+        <label for="dateInput">Date</label>
+        <div class="date-controls">
+          <input type="date" id="dateInput" />
+          <button type="button" id="todayBtn" class="btn btn-secondary">Today</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sectionSelect">Class / Section</label>
+        <select id="sectionSelect">
+          <option value="ALL">All Sections</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="searchInput">Search Student</label>
+        <input type="text" id="searchInput" placeholder="Search by name or ID..." />
+      </div>
+    </section>
+
+    <main id="dailySection">
+      <section class="stats-grid" aria-label="Attendance Summary">
+        <div class="stat-card">
+          <span class="stat-label">Total</span>
+          <strong class="stat-value" id="totalCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Present</span>
+          <strong class="stat-value present-text" id="presentCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Late</span>
+          <strong class="stat-value late-text" id="lateCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Absent</span>
+          <strong class="stat-value absent-text" id="absentCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Excused</span>
+          <strong class="stat-value excused-text" id="excusedCount">0</strong>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Rate</span>
+          <strong class="stat-value primary-text" id="rateValue">0%</strong>
+        </div>
+      </section>
+
+      <div class="action-bar">
+        <div class="action-group">
+          <button type="button" id="markAllPresentBtn" class="btn btn-secondary">Mark All Present</button>
+          <button type="button" id="resetDayBtn" class="btn btn-secondary">Reset Day</button>
+        </div>
+        <div class="action-group">
+          <button type="button" id="exportDayBtn" class="btn btn-secondary">Export Day CSV</button>
+        </div>
+      </div>
+
+      <div id="studentList" class="student-list"></div>
+    </main>
+
+    <main id="historySection" class="hidden">
+      <div class="action-bar">
+        <span class="subtitle">Cumulative attendance across all recorded dates.</span>
+        <button type="button" id="exportSummaryBtn" class="btn btn-primary">Export Summary CSV</button>
+      </div>
+
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Section</th>
+              <th>Present</th>
+              <th>Late</th>
+              <th>Absent</th>
+              <th>Excused</th>
+              <th>Rate</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div id="studentModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <form id="studentForm" class="modal-card">
+      <h2 id="modalTitle">Add New Student</h2>
+
+      <div class="field">
+        <label for="studentIdInput">Student ID</label>
+        <input type="text" id="studentIdInput" placeholder="e.g., 2026-005" required />
+      </div>
+
+      <div class="field">
+        <label for="studentNameInput">Full Name</label>
+        <input type="text" id="studentNameInput" placeholder="e.g., Juan Dela Cruz" required />
+      </div>
+
+      <div class="field">
+        <label for="studentSectionInput">Class / Section</label>
+        <input type="text" id="studentSectionInput" placeholder="e.g., Grade 10 - Einstein" required />
+      </div>
+
+      <p id="modalError" class="error-msg"></p>
+
+      <div class="modal-actions">
+        <button type="button" id="closeModalBtn" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Student</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
